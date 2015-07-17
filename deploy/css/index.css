@@ -1,0 +1,70 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+  user_select: none;
+  -webkit-user-select: none; }
+
+html, body {
+  min-height: 100%;
+  height: 100%; }
+
+body {
+  background-color: #454545;
+  color: #d7d7d7;
+  overflow: hidden;
+  font: 11px arial, helvetica, "メイリオ", Meiryo, "ＭＳ Ｐゴシック", clean, sans-serif;
+  position: relative; }
+
+button {
+  height: 32px;
+  color: #d7d7d7;
+  font-size: 11px;
+  border: 1px solid #151515;
+  background: -webkit-linear-gradient(top, #535353, #3e3e3e); }
+  button:enabled:hover:hover {
+    background: -webkit-linear-gradient(top, #636363, #4e4e4e); }
+  button:enabled:hover:active {
+    border: 1px solid #c69100; }
+  button:disabled {
+    color: #686868;
+    background: -webkit-linear-gradient(top, #424242, #2d2d2d); }
+    button:disabled img {
+      opacity: 0.2; }
+
+hr {
+  border: 1px solid #333333;
+  margin-bottom: 11px; }
+
+#pixel_outline_runner {
+  padding-left: 30px; }
+  #pixel_outline_runner button {
+    width: 130px; }
+
+.clear {
+  clear: both; }
+
+.title {
+  padding: 3px 0;
+  padding-left: 5px;
+  font-weight: bold;
+  background: -webkit-linear-gradient(top, #535353, #3e3e3e);
+  border: 1px solid #151515;
+  cursor: default;
+  -webkit-user-select: none; }
+  .title:before {
+    content: "";
+    padding-right: 15px;
+    background-image: url("../img/cursor.png");
+    background-repeat: no-repeat;
+    background-position: 0 4px; }
+
+ul {
+  list-style: none; }
+
+li {
+  margin: 5px; }
+  li input {
+    vertical-align: middle; }
+
+/*# sourceMappingURL=index.css.map */

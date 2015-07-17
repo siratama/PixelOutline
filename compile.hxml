@@ -1,0 +1,15 @@
+-js deploy/js/index.js
+-main extension.Panel
+-cp src/main
+-cp src/extern
+-cp C:/googledrive/workspace/haxelib/haxe-cep
+-lib jQueryExtern
+-debug
+
+--next
+
+-js deploy/jsx/PixelOutline.jsx
+-main jsx.PixelOutline
+-cp src/main
+-cp src/extern
+-D js-classic
