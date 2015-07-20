@@ -28,7 +28,6 @@ class Button
 	{
 		element.removeAttr("disabled");
 	}
-
 	public function isDisabled():Bool
 	{
 		return element.attr("disabled") != null;

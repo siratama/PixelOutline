@@ -1,7 +1,5 @@
-(function () { "use strict";
-var $hxClasses = {};
-var HxOverrides = function() { };
-$hxClasses["HxOverrides"] = HxOverrides;
+var $hxClasses = $hxClasses || {},$estr = function() { return js.Boot.__string_rec(this,''); };
+var HxOverrides = $hxClasses["HxOverrides"] = function() { };
 HxOverrides.__name__ = ["HxOverrides"];
 HxOverrides.dateStr = function(date) {
 	var m = date.getMonth() + 1;
@@ -55,10 +53,9 @@ HxOverrides.iter = function(a) {
 		return this.arr[this.cur++];
 	}};
 };
-var List = function() {
+var List = $hxClasses["List"] = function() {
 	this.length = 0;
 };
-$hxClasses["List"] = List;
 List.__name__ = ["List"];
 List.prototype = {
 	add: function(item) {
@@ -79,12 +76,10 @@ List.prototype = {
 	}
 	,__class__: List
 };
-var IMap = function() { };
-$hxClasses["IMap"] = IMap;
+var IMap = $hxClasses["IMap"] = function() { };
 IMap.__name__ = ["IMap"];
 Math.__name__ = ["Math"];
-var Reflect = function() { };
-$hxClasses["Reflect"] = Reflect;
+var Reflect = $hxClasses["Reflect"] = function() { };
 Reflect.__name__ = ["Reflect"];
 Reflect.field = function(o,field) {
 	try {
@@ -106,18 +101,12 @@ Reflect.fields = function(o) {
 Reflect.isFunction = function(f) {
 	return typeof(f) == "function" && !(f.__name__ || f.__ename__);
 };
-Reflect.compareMethods = function(f1,f2) {
-	if(f1 == f2) return true;
-	if(!Reflect.isFunction(f1) || !Reflect.isFunction(f2)) return false;
-	return f1.scope == f2.scope && f1.method == f2.method && f1.method != null;
-};
 Reflect.deleteField = function(o,field) {
 	if(!Object.prototype.hasOwnProperty.call(o,field)) return false;
 	delete(o[field]);
 	return true;
 };
-var Std = function() { };
-$hxClasses["Std"] = Std;
+var Std = $hxClasses["Std"] = function() { };
 Std.__name__ = ["Std"];
 Std.string = function(s) {
 	return js.Boot.__string_rec(s,"");
@@ -125,10 +114,9 @@ Std.string = function(s) {
 Std.parseFloat = function(x) {
 	return parseFloat(x);
 };
-var StringBuf = function() {
+var StringBuf = $hxClasses["StringBuf"] = function() {
 	this.b = "";
 };
-$hxClasses["StringBuf"] = StringBuf;
 StringBuf.__name__ = ["StringBuf"];
 StringBuf.prototype = {
 	add: function(x) {
@@ -136,31 +124,36 @@ StringBuf.prototype = {
 	}
 	,__class__: StringBuf
 };
-var StringTools = function() { };
-$hxClasses["StringTools"] = StringTools;
+var StringTools = $hxClasses["StringTools"] = function() { };
 StringTools.__name__ = ["StringTools"];
 StringTools.fastCodeAt = function(s,index) {
 	return s.charCodeAt(index);
 };
 var ValueType = $hxClasses["ValueType"] = { __ename__ : ["ValueType"], __constructs__ : ["TNull","TInt","TFloat","TBool","TObject","TFunction","TClass","TEnum","TUnknown"] };
 ValueType.TNull = ["TNull",0];
+ValueType.TNull.toString = $estr;
 ValueType.TNull.__enum__ = ValueType;
 ValueType.TInt = ["TInt",1];
+ValueType.TInt.toString = $estr;
 ValueType.TInt.__enum__ = ValueType;
 ValueType.TFloat = ["TFloat",2];
+ValueType.TFloat.toString = $estr;
 ValueType.TFloat.__enum__ = ValueType;
 ValueType.TBool = ["TBool",3];
+ValueType.TBool.toString = $estr;
 ValueType.TBool.__enum__ = ValueType;
 ValueType.TObject = ["TObject",4];
+ValueType.TObject.toString = $estr;
 ValueType.TObject.__enum__ = ValueType;
 ValueType.TFunction = ["TFunction",5];
+ValueType.TFunction.toString = $estr;
 ValueType.TFunction.__enum__ = ValueType;
-ValueType.TClass = function(c) { var $x = ["TClass",6,c]; $x.__enum__ = ValueType; return $x; };
-ValueType.TEnum = function(e) { var $x = ["TEnum",7,e]; $x.__enum__ = ValueType; return $x; };
+ValueType.TClass = function(c) { var $x = ["TClass",6,c]; $x.__enum__ = ValueType; $x.toString = $estr; return $x; };
+ValueType.TEnum = function(e) { var $x = ["TEnum",7,e]; $x.__enum__ = ValueType; $x.toString = $estr; return $x; };
 ValueType.TUnknown = ["TUnknown",8];
+ValueType.TUnknown.toString = $estr;
 ValueType.TUnknown.__enum__ = ValueType;
-var Type = function() { };
-$hxClasses["Type"] = Type;
+var Type = $hxClasses["Type"] = function() { };
 Type.__name__ = ["Type"];
 Type.getClassName = function(c) {
 	var a = c.__name__;
@@ -225,297 +218,17 @@ Type["typeof"] = function(v) {
 		return ValueType.TUnknown;
 	}
 };
-var adobe = {};
-adobe.cep = {};
-adobe.cep._CSEventScope = {};
-adobe.cep._CSEventScope.CSEventScope_Impl_ = function() { };
-$hxClasses["adobe.cep._CSEventScope.CSEventScope_Impl_"] = adobe.cep._CSEventScope.CSEventScope_Impl_;
-adobe.cep._CSEventScope.CSEventScope_Impl_.__name__ = ["adobe","cep","_CSEventScope","CSEventScope_Impl_"];
-adobe.cep._CSEventType = {};
-adobe.cep._CSEventType.CSEventType_Impl_ = function() { };
-$hxClasses["adobe.cep._CSEventType.CSEventType_Impl_"] = adobe.cep._CSEventType.CSEventType_Impl_;
-adobe.cep._CSEventType.CSEventType_Impl_.__name__ = ["adobe","cep","_CSEventType","CSEventType_Impl_"];
-adobe.cep._OpenURLInDefaultBrowserCode = {};
-adobe.cep._OpenURLInDefaultBrowserCode.OpenURLInDefaultBrowserCode_Impl_ = function() { };
-$hxClasses["adobe.cep._OpenURLInDefaultBrowserCode.OpenURLInDefaultBrowserCode_Impl_"] = adobe.cep._OpenURLInDefaultBrowserCode.OpenURLInDefaultBrowserCode_Impl_;
-adobe.cep._OpenURLInDefaultBrowserCode.OpenURLInDefaultBrowserCode_Impl_.__name__ = ["adobe","cep","_OpenURLInDefaultBrowserCode","OpenURLInDefaultBrowserCode_Impl_"];
-adobe.cep._ScaleFactor = {};
-adobe.cep._ScaleFactor.ScaleFactor_Impl_ = function() { };
-$hxClasses["adobe.cep._ScaleFactor.ScaleFactor_Impl_"] = adobe.cep._ScaleFactor.ScaleFactor_Impl_;
-adobe.cep._ScaleFactor.ScaleFactor_Impl_.__name__ = ["adobe","cep","_ScaleFactor","ScaleFactor_Impl_"];
-adobe.cep._UIColorType = {};
-adobe.cep._UIColorType.UIColorType_Impl_ = function() { };
-$hxClasses["adobe.cep._UIColorType.UIColorType_Impl_"] = adobe.cep._UIColorType.UIColorType_Impl_;
-adobe.cep._UIColorType.UIColorType_Impl_.__name__ = ["adobe","cep","_UIColorType","UIColorType_Impl_"];
-var common = {};
-common.ClassName = function() { };
-$hxClasses["common.ClassName"] = common.ClassName;
-common.ClassName.__name__ = ["common","ClassName"];
-common.JsxEvent = $hxClasses["common.JsxEvent"] = { __ename__ : ["common","JsxEvent"], __constructs__ : ["NONE","GOTTEN"] };
-common.JsxEvent.NONE = ["NONE",0];
-common.JsxEvent.NONE.__enum__ = common.JsxEvent;
-common.JsxEvent.GOTTEN = function(serializedEvent) { var $x = ["GOTTEN",1,serializedEvent]; $x.__enum__ = common.JsxEvent; return $x; };
+var common = common || {};
 common.PixelOutlineInitialErrorEvent = $hxClasses["common.PixelOutlineInitialErrorEvent"] = { __ename__ : ["common","PixelOutlineInitialErrorEvent"], __constructs__ : ["NONE","ERROR"] };
 common.PixelOutlineInitialErrorEvent.NONE = ["NONE",0];
+common.PixelOutlineInitialErrorEvent.NONE.toString = $estr;
 common.PixelOutlineInitialErrorEvent.NONE.__enum__ = common.PixelOutlineInitialErrorEvent;
-common.PixelOutlineInitialErrorEvent.ERROR = function(error) { var $x = ["ERROR",1,error]; $x.__enum__ = common.PixelOutlineInitialErrorEvent; return $x; };
-common._PixelOutlineInitialErrorEvent = {};
-common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_ = function() { };
-$hxClasses["common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_"] = common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_;
+common.PixelOutlineInitialErrorEvent.ERROR = function(error) { var $x = ["ERROR",1,error]; $x.__enum__ = common.PixelOutlineInitialErrorEvent; $x.toString = $estr; return $x; };
+if(!common._PixelOutlineInitialErrorEvent) common._PixelOutlineInitialErrorEvent = {};
+common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_ = $hxClasses["common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_"] = function() { };
 common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_.__name__ = ["common","_PixelOutlineInitialErrorEvent","PixelOutlineInitialError_Impl_"];
-var extension = {};
-extension.AbstractCSInterface = function(csInterface) {
-	this.csInterface = csInterface;
-};
-$hxClasses["extension.AbstractCSInterface"] = extension.AbstractCSInterface;
-extension.AbstractCSInterface.__name__ = ["extension","AbstractCSInterface"];
-extension.AbstractCSInterface.create = function() {
-	return new extension.AbstractCSInterface(new CSInterface());
-};
-extension.AbstractCSInterface.prototype = {
-	getExtensionUri: function() {
-		return "file:///" + this.csInterface.getSystemPath(SystemPath.EXTENSION);
-	}
-	,getExtensionSystemPath: function() {
-		return this.csInterface.getSystemPath(SystemPath.EXTENSION);
-	}
-	,evalScript: function(script,callback) {
-		this.csInterface.evalScript(script,callback);
-	}
-	,evalFile: function(filePath,callback) {
-		this.csInterface.evalScript("$.evalFile(\"" + filePath + "\");",callback);
-	}
-	,showColorPicker: function(pickForeground,callback) {
-		if(pickForeground == null) pickForeground = true;
-		return this.csInterface.evalScript("app.showColorPicker(" + (pickForeground == null?"null":"" + pickForeground) + ");",callback);
-	}
-	,callColorPicker: function(callback) {
-		return this.csInterface.evalScript("$.colorPicker();",callback);
-	}
-	,__class__: extension.AbstractCSInterface
-};
-extension.JsxLoader = function() {
-	this.csInterface = extension.AbstractCSInterface.create();
-	this.loadIndex = 0;
-	this.load();
-};
-$hxClasses["extension.JsxLoader"] = extension.JsxLoader;
-extension.JsxLoader.__name__ = ["extension","JsxLoader"];
-extension.JsxLoader.prototype = {
-	getJsxPath: function(fileName) {
-		return this.csInterface.getExtensionSystemPath() + "/jsx/" + fileName + ".jsx";
-	}
-	,run: function() {
-		this.mainFunction();
-	}
-	,load: function() {
-		var _g = this;
-		var fileName = extension.JsxLoader.LOAD_JSX_SET[this.loadIndex];
-		var filePath = this.csInterface.getExtensionSystemPath() + "/jsx/" + fileName + ".jsx";
-		this.loaded = false;
-		this.csInterface.evalFile(filePath,function(result) {
-			_g.loaded = true;
-		});
-		this.mainFunction = $bind(this,this.observeToLoad);
-	}
-	,observeToLoad: function() {
-		if(!this.loaded) return;
-		if(++this.loadIndex < extension.JsxLoader.LOAD_JSX_SET.length) this.load(); else this.mainFunction = $bind(this,this.finish);
-	}
-	,finish: function() {
-	}
-	,isFinished: function() {
-		return Reflect.compareMethods(this.mainFunction,$bind(this,this.finish));
-	}
-	,__class__: extension.JsxLoader
-};
-extension.Panel = function() {
-	window.addEventListener("load",$bind(this,this.initialize));
-};
-$hxClasses["extension.Panel"] = extension.Panel;
-extension.Panel.__name__ = ["extension","Panel"];
-extension.Panel.main = function() {
-	new extension.Panel();
-};
-extension.Panel.prototype = {
-	initialize: function(event) {
-		this.csInterface = extension.AbstractCSInterface.create();
-		this.jsxLoader = new extension.JsxLoader();
-		this.pixelOutlineRunner = new extension.PixelOutlineRunner();
-		if(extension.View.instance == null) this.view = extension.View.instance = new extension.View(); else this.view = extension.View.instance;
-		this.startRunning($bind(this,this.loadJsx),50);
-	}
-	,startRunning: function(func,speed) {
-		this.mainFunction = func;
-		this.setTimer(speed);
-	}
-	,changeRunning: function(func,speed) {
-		this.timer.stop();
-		this.startRunning(func,speed);
-	}
-	,setTimer: function(speed) {
-		this.timer = new haxe.Timer(speed);
-		this.timer.run = $bind(this,this.run);
-	}
-	,run: function() {
-		this.mainFunction();
-	}
-	,loadJsx: function() {
-		this.jsxLoader.run();
-		if(this.jsxLoader.isFinished()) this.initializeToClickUI();
-	}
-	,initializeToClickUI: function() {
-		this.changeRunning($bind(this,this.observeToClickUI),250);
-	}
-	,observeToClickUI: function() {
-		if(this.view.runButton.isClicked()) this.initializeToCallPixelOutline(false); else if(this.view.runNewLayerButton.isClicked()) this.initializeToCallPixelOutline(true);
-	}
-	,initializeToCallPixelOutline: function(isCreatedNewLayer) {
-		this.pixelOutlineRunner.call(isCreatedNewLayer);
-		this.changeRunning($bind(this,this.callPixelOutline),50);
-	}
-	,callPixelOutline: function() {
-		this.pixelOutlineRunner.run();
-		var event = this.pixelOutlineRunner.getEvent();
-		switch(event[1]) {
-		case 2:
-			return;
-		case 0:
-			var error = event[2];
-			js.Lib.alert(js.Boot.__cast(error , String));
-			this.initializeToClickUI();
-			break;
-		case 1:
-			this.initializeToClickUI();
-			break;
-		}
-	}
-	,__class__: extension.Panel
-};
-extension.PixelOutlineRunnerEvent = $hxClasses["extension.PixelOutlineRunnerEvent"] = { __ename__ : ["extension","PixelOutlineRunnerEvent"], __constructs__ : ["INITIAL_ERROR_EVENT","SUCCESS","NONE"] };
-extension.PixelOutlineRunnerEvent.INITIAL_ERROR_EVENT = function(error) { var $x = ["INITIAL_ERROR_EVENT",0,error]; $x.__enum__ = extension.PixelOutlineRunnerEvent; return $x; };
-extension.PixelOutlineRunnerEvent.SUCCESS = ["SUCCESS",1];
-extension.PixelOutlineRunnerEvent.SUCCESS.__enum__ = extension.PixelOutlineRunnerEvent;
-extension.PixelOutlineRunnerEvent.NONE = ["NONE",2];
-extension.PixelOutlineRunnerEvent.NONE.__enum__ = extension.PixelOutlineRunnerEvent;
-extension.PixelOutlineRunner = function() {
-	this.csInterface = extension.AbstractCSInterface.create();
-};
-$hxClasses["extension.PixelOutlineRunner"] = extension.PixelOutlineRunner;
-extension.PixelOutlineRunner.__name__ = ["extension","PixelOutlineRunner"];
-extension.PixelOutlineRunner.prototype = {
-	getEvent: function() {
-		var n = this.event;
-		this.event = extension.PixelOutlineRunnerEvent.NONE;
-		return n;
-	}
-	,run: function() {
-		this.mainFunction();
-	}
-	,call: function(isCreatedNewLayer) {
-		var _g = this;
-		this.isCreatedNewLayer = isCreatedNewLayer;
-		this.event = extension.PixelOutlineRunnerEvent.NONE;
-		this.jsxEvent = common.JsxEvent.NONE;
-		this.csInterface.evalScript("var " + "pixelOutline" + " = new " + "PixelOutline" + "();");
-		this.csInterface.evalScript("" + "pixelOutline" + ".getInitialErrorEvent();",function(result) {
-			_g.jsxEvent = common.JsxEvent.GOTTEN(result);
-		});
-		this.mainFunction = $bind(this,this.observeToRecieveInitialErrorEvent);
-	}
-	,observeToRecieveInitialErrorEvent: function() {
-		{
-			var _g = this.recieveJsxEvent();
-			switch(_g[1]) {
-			case 0:
-				return;
-			case 1:
-				var serializedEvent = _g[2];
-				var initialErrorEvent = haxe.Unserializer.run(serializedEvent);
-				switch(initialErrorEvent[1]) {
-				case 1:
-					var error = initialErrorEvent[2];
-					this.destroy(extension.PixelOutlineRunnerEvent.INITIAL_ERROR_EVENT(error));
-					break;
-				case 0:
-					this.execute();
-					break;
-				}
-				break;
-			}
-		}
-	}
-	,execute: function() {
-		var data = haxe.Serializer.run(this.isCreatedNewLayer);
-		this.csInterface.evalScript("" + "pixelOutline" + ".execute(\"" + data + "\");");
-		this.destroy(extension.PixelOutlineRunnerEvent.SUCCESS);
-	}
-	,recieveJsxEvent: function() {
-		var n = this.jsxEvent;
-		this.jsxEvent = common.JsxEvent.NONE;
-		return n;
-	}
-	,destroy: function(event) {
-		this.event = event;
-		this.mainFunction = $bind(this,this.finish);
-	}
-	,finish: function() {
-	}
-	,__class__: extension.PixelOutlineRunner
-};
-extension.View = function() {
-	this.element = new $("#pixel_outline_runner");
-	this.runButton = new extension.parts.Button(this.element,"run_button");
-	this.runNewLayerButton = new extension.parts.Button(this.element,"run_new_layer_button");
-};
-$hxClasses["extension.View"] = extension.View;
-extension.View.__name__ = ["extension","View"];
-extension.View.get_instance = function() {
-	if(extension.View.instance == null) return extension.View.instance = new extension.View(); else return extension.View.instance;
-};
-extension.View.prototype = {
-	__class__: extension.View
-};
-extension.parts = {};
-extension.parts.Button = function(parentElement,className) {
-	var _g = this;
-	this.element = new $("." + className,parentElement);
-	this.element.click(function(event) {
-		_g.clicked = true;
-	});
-};
-$hxClasses["extension.parts.Button"] = extension.parts.Button;
-extension.parts.Button.__name__ = ["extension","parts","Button"];
-extension.parts.Button.prototype = {
-	isClicked: function() {
-		var n = this.clicked;
-		this.clicked = false;
-		return n;
-	}
-	,disable: function() {
-		this.element.attr("disabled","disabled");
-	}
-	,removeDisabled: function() {
-		this.element.removeAttr("disabled");
-	}
-	,isDisabled: function() {
-		return this.element.attr("disabled") != null;
-	}
-	,__class__: extension.parts.Button
-};
-extension.parts.TitleBar = function(titleBarId,slideElement) {
-	var titleElement = new $("#" + titleBarId);
-	titleElement.mousedown(function(event) {
-		if(slideElement["is"](":hidden")) slideElement.slideDown("fast"); else slideElement.slideUp("fast");
-	});
-};
-$hxClasses["extension.parts.TitleBar"] = extension.parts.TitleBar;
-extension.parts.TitleBar.__name__ = ["extension","parts","TitleBar"];
-extension.parts.TitleBar.prototype = {
-	__class__: extension.parts.TitleBar
-};
-var haxe = {};
-haxe.Serializer = function() {
+var haxe = haxe || {};
+haxe.Serializer = $hxClasses["haxe.Serializer"] = function() {
 	this.buf = new StringBuf();
 	this.cache = new Array();
 	this.useCache = haxe.Serializer.USE_CACHE;
@@ -523,7 +236,6 @@ haxe.Serializer = function() {
 	this.shash = new haxe.ds.StringMap();
 	this.scount = 0;
 };
-$hxClasses["haxe.Serializer"] = haxe.Serializer;
 haxe.Serializer.__name__ = ["haxe","Serializer"];
 haxe.Serializer.run = function(v) {
 	var s = new haxe.Serializer();
@@ -772,25 +484,7 @@ haxe.Serializer.prototype = {
 	}
 	,__class__: haxe.Serializer
 };
-haxe.Timer = function(time_ms) {
-	var me = this;
-	this.id = setInterval(function() {
-		me.run();
-	},time_ms);
-};
-$hxClasses["haxe.Timer"] = haxe.Timer;
-haxe.Timer.__name__ = ["haxe","Timer"];
-haxe.Timer.prototype = {
-	stop: function() {
-		if(this.id == null) return;
-		clearInterval(this.id);
-		this.id = null;
-	}
-	,run: function() {
-	}
-	,__class__: haxe.Timer
-};
-haxe.Unserializer = function(buf) {
+haxe.Unserializer = $hxClasses["haxe.Unserializer"] = function(buf) {
 	this.buf = buf;
 	this.length = buf.length;
 	this.pos = 0;
@@ -803,7 +497,6 @@ haxe.Unserializer = function(buf) {
 	}
 	this.setResolver(r);
 };
-$hxClasses["haxe.Unserializer"] = haxe.Unserializer;
 haxe.Unserializer.__name__ = ["haxe","Unserializer"];
 haxe.Unserializer.initCodes = function() {
 	var codes = new Array();
@@ -1060,11 +753,10 @@ haxe.Unserializer.prototype = {
 	}
 	,__class__: haxe.Unserializer
 };
-haxe.ds = {};
-haxe.ds.IntMap = function() {
+if(!haxe.ds) haxe.ds = {};
+haxe.ds.IntMap = $hxClasses["haxe.ds.IntMap"] = function() {
 	this.h = { };
 };
-$hxClasses["haxe.ds.IntMap"] = haxe.ds.IntMap;
 haxe.ds.IntMap.__name__ = ["haxe","ds","IntMap"];
 haxe.ds.IntMap.__interfaces__ = [IMap];
 haxe.ds.IntMap.prototype = {
@@ -1083,11 +775,10 @@ haxe.ds.IntMap.prototype = {
 	}
 	,__class__: haxe.ds.IntMap
 };
-haxe.ds.ObjectMap = function() {
+haxe.ds.ObjectMap = $hxClasses["haxe.ds.ObjectMap"] = function() {
 	this.h = { };
 	this.h.__keys__ = { };
 };
-$hxClasses["haxe.ds.ObjectMap"] = haxe.ds.ObjectMap;
 haxe.ds.ObjectMap.__name__ = ["haxe","ds","ObjectMap"];
 haxe.ds.ObjectMap.__interfaces__ = [IMap];
 haxe.ds.ObjectMap.prototype = {
@@ -1105,10 +796,9 @@ haxe.ds.ObjectMap.prototype = {
 	}
 	,__class__: haxe.ds.ObjectMap
 };
-haxe.ds.StringMap = function() {
+haxe.ds.StringMap = $hxClasses["haxe.ds.StringMap"] = function() {
 	this.h = { };
 };
-$hxClasses["haxe.ds.StringMap"] = haxe.ds.StringMap;
 haxe.ds.StringMap.__name__ = ["haxe","ds","StringMap"];
 haxe.ds.StringMap.__interfaces__ = [IMap];
 haxe.ds.StringMap.prototype = {
@@ -1127,12 +817,11 @@ haxe.ds.StringMap.prototype = {
 	}
 	,__class__: haxe.ds.StringMap
 };
-haxe.io = {};
-haxe.io.Bytes = function(length,b) {
+if(!haxe.io) haxe.io = {};
+haxe.io.Bytes = $hxClasses["haxe.io.Bytes"] = function(length,b) {
 	this.length = length;
 	this.b = b;
 };
-$hxClasses["haxe.io.Bytes"] = haxe.io.Bytes;
 haxe.io.Bytes.__name__ = ["haxe","io","Bytes"];
 haxe.io.Bytes.alloc = function(length) {
 	var a = new Array();
@@ -1152,8 +841,7 @@ haxe.io.Bytes.prototype = {
 	}
 	,__class__: haxe.io.Bytes
 };
-haxe.io.Eof = function() { };
-$hxClasses["haxe.io.Eof"] = haxe.io.Eof;
+haxe.io.Eof = $hxClasses["haxe.io.Eof"] = function() { };
 haxe.io.Eof.__name__ = ["haxe","io","Eof"];
 haxe.io.Eof.prototype = {
 	toString: function() {
@@ -1161,9 +849,8 @@ haxe.io.Eof.prototype = {
 	}
 	,__class__: haxe.io.Eof
 };
-var js = {};
-js.Boot = function() { };
-$hxClasses["js.Boot"] = js.Boot;
+var js = js || {};
+js.Boot = $hxClasses["js.Boot"] = function() { };
 js.Boot.__name__ = ["js","Boot"];
 js.Boot.getClass = function(o) {
 	if((o instanceof Array) && o.__enum__ == null) return Array; else return o.__class__;
@@ -1280,14 +967,175 @@ js.Boot.__instanceof = function(o,cl) {
 js.Boot.__cast = function(o,t) {
 	if(js.Boot.__instanceof(o,t)) return o; else throw "Cannot cast " + Std.string(o) + " to " + Std.string(t);
 };
-js.Lib = function() { };
-$hxClasses["js.Lib"] = js.Lib;
+js.Lib = $hxClasses["js.Lib"] = function() { };
 js.Lib.__name__ = ["js","Lib"];
 js.Lib.alert = function(v) {
 	alert(js.Boot.__string_rec(v,""));
 };
-var $_, $fid = 0;
-function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id__ = $fid++; var f; if( o.hx__closures__ == null ) o.hx__closures__ = {}; else f = o.hx__closures__[m.__id__]; if( f == null ) { f = function(){ return f.method.apply(f.scope, arguments); }; f.scope = o; f.method = m; o.hx__closures__[m.__id__] = f; } return f; }
+var PixelOutline = $hxClasses["PixelOutline"] = function() {
+	this.application = psd.Lib.app;
+};
+PixelOutline.__name__ = ["PixelOutline"];
+PixelOutline.main = function() {
+	jsx._PixelOutline.PixelOutlineJSXRunner.execute(false);
+};
+PixelOutline.prototype = {
+	getInitialErrorEvent: function() {
+		var error;
+		if(this.application.documents.length == 0) error = "unopened document"; else if(this.application.activeDocument.activeLayer.typename == LayerTypeName.LAYER_SET) error = "unselected single layer"; else if(!jsx.util.ErrorChecker.isSelectedSingleLayer(this.application.activeDocument)) error = "selected layer set"; else if(this.application.activeDocument.activeLayer.allLocked) error = "selected background layer"; else if((js.Boot.__cast(this.application.activeDocument.activeLayer , ArtLayer)).isBackgroundLayer) error = "selected locked layer"; else if(!jsx.util.ErrorChecker.hasPixel(this.application.activeDocument.activeLayer)) error = "selected transparent layer"; else error = null;
+		var event;
+		if(error == null) event = common.PixelOutlineInitialErrorEvent.NONE; else event = common.PixelOutlineInitialErrorEvent.ERROR(error);
+		return haxe.Serializer.run(event);
+	}
+	,execute: function(serializedNewLayerCreation) {
+		var isNewLayerCreation = haxe.Unserializer.run(serializedNewLayerCreation);
+		this.activeDocument = this.application.activeDocument;
+		this.documentWidth = this.activeDocument.width | 0;
+		this.documentHeight = this.activeDocument.height | 0;
+		var baseLayer = this.activeDocument.activeLayer;
+		var activeLayerDefaultVisible = baseLayer.visible;
+		if(!activeLayerDefaultVisible) baseLayer.visible = true;
+		var newLayer = this.createNewLayer(baseLayer);
+		jsx.util.PrivateAPI.selectShapeBorder(baseLayer);
+		this.activeDocument.activeLayer = newLayer;
+		var selection = this.activeDocument.selection;
+		selection.invert();
+		selection.contract("1");
+		selection.invert();
+		selection.fill(this.application.foregroundColor);
+		jsx.util.PrivateAPI.selectShapeBorder(baseLayer);
+		this.activeDocument.activeLayer = newLayer;
+		selection.clear();
+		selection.deselect();
+		if(!isNewLayerCreation) (js.Boot.__cast(newLayer , ArtLayer)).merge();
+		if(!activeLayerDefaultVisible) baseLayer.visible = false;
+	}
+	,createNewLayer: function(baseLayer) {
+		var newLayer = baseLayer.duplicate();
+		newLayer.name = baseLayer.name + " outline";
+		this.activeDocument.activeLayer = newLayer;
+		var selection = this.activeDocument.selection;
+		selection.selectAll();
+		selection.clear();
+		selection.deselect();
+		this.activeDocument.activeLayer = baseLayer;
+		return newLayer;
+	}
+	,strokeOutline: function() {
+		var selection = this.activeDocument.selection;
+		selection.invert();
+		selection.contract("1");
+		selection.invert();
+		selection.fill(this.application.foregroundColor);
+		selection.deselect();
+	}
+	,clearHorizontally: function(x) {
+		this.selectHorizontally(x);
+		this.activeDocument.selection.clear();
+	}
+	,clearVertically: function(y) {
+		this.selectVertically(y);
+		this.activeDocument.selection.clear();
+	}
+	,selectHorizontally: function(y) {
+		this.activeDocument.selection.select([[0,y],[this.documentWidth,y],[this.documentWidth,y + 1],[0,y + 1]]);
+	}
+	,selectVertically: function(x) {
+		this.activeDocument.selection.select([[x,0],[x + 1,0],[x + 1,this.documentHeight],[x,this.documentHeight]]);
+	}
+	,__class__: PixelOutline
+};
+var jsx = jsx || {};
+if(!jsx._PixelOutline) jsx._PixelOutline = {};
+jsx._PixelOutline.PixelOutlineJSXRunner = $hxClasses["jsx._PixelOutline.PixelOutlineJSXRunner"] = function() { };
+jsx._PixelOutline.PixelOutlineJSXRunner.__name__ = ["jsx","_PixelOutline","PixelOutlineJSXRunner"];
+jsx._PixelOutline.PixelOutlineJSXRunner.execute = function(isNewLayerCreation) {
+	var pixelOutline = new PixelOutline();
+	var errorEvent = haxe.Unserializer.run(pixelOutline.getInitialErrorEvent());
+	switch(errorEvent[1]) {
+	case 1:
+		var error = errorEvent[2];
+		js.Lib.alert(js.Boot.__cast(error , String));
+		break;
+	case 0:
+		var serializedToCreateNewLayer = haxe.Serializer.run(isNewLayerCreation);
+		pixelOutline.execute(serializedToCreateNewLayer);
+		break;
+	}
+};
+if(!jsx.util) jsx.util = {};
+jsx.util.ErrorChecker = $hxClasses["jsx.util.ErrorChecker"] = function() { };
+jsx.util.ErrorChecker.__name__ = ["jsx","util","ErrorChecker"];
+jsx.util.ErrorChecker.isSelectedSingleLayer = function(activeDocument) {
+	var selectedSingleLayer = true;
+	var selection = activeDocument.selection;
+	try {
+		selection.deselect();
+		var x = 0;
+		var y = 0;
+		selection.select([[x,y],[x + 1,y],[x + 1,y + 1],[x,y + 1]]);
+		selection.similar(0,false);
+	} catch( error ) {
+		selectedSingleLayer = false;
+	}
+	selection.deselect();
+	return selectedSingleLayer;
+};
+jsx.util.ErrorChecker.hasPixel = function(layer) {
+	var bounds = layer.bounds;
+	var _g = 0;
+	while(_g < bounds.length) {
+		var bound = bounds[_g];
+		++_g;
+		if(bound == null) return false;
+	}
+	return true;
+};
+jsx.util.PrivateAPI = $hxClasses["jsx.util.PrivateAPI"] = function() { };
+jsx.util.PrivateAPI.__name__ = ["jsx","util","PrivateAPI"];
+jsx.util.PrivateAPI.selectShapeBorder = function(layer) {
+	var originalLayerName = layer.name;
+	layer.name = "_____temp_layer_name_____ ";
+	var layerName = layer.name;
+	var idsetd = charIDToTypeID("setd");
+	var desc = new ActionDescriptor();
+	var idnull = charIDToTypeID("null");
+	var ref = new ActionReference();
+	var idChnl = charIDToTypeID("Chnl");
+	var idfsel = charIDToTypeID("fsel");
+	ref.putProperty(idChnl,idfsel);
+	desc.putReference(idnull,ref);
+	var idT = charIDToTypeID("T   ");
+	var ref2 = new ActionReference();
+	ref2.putEnumerated(charIDToTypeID("Chnl"),charIDToTypeID("Chnl"),charIDToTypeID("Trsp"));
+	var idLyr = charIDToTypeID("Lyr ");
+	ref2.putName(idLyr,layerName);
+	desc.putReference(idT,ref2);
+	executeAction(idsetd,desc,DialogModes.NO);
+	layer.name = originalLayerName;
+};
+var LayerTypeName = $hxClasses["LayerTypeName"] = function() { };
+LayerTypeName.__name__ = ["LayerTypeName"];
+var psd = psd || {};
+psd.Lib = $hxClasses["psd.Lib"] = function() { };
+psd.Lib.__name__ = ["psd","Lib"];
+psd.Lib.writeln = function(message) {
+	$.writeln(message);
+};
+psd.UnitType = $hxClasses["psd.UnitType"] = function() { };
+psd.UnitType.__name__ = ["psd","UnitType"];
+var psd_private = psd_private || {};
+if(!psd_private._CharacterID) psd_private._CharacterID = {};
+psd_private._CharacterID.CharacterID_Impl_ = $hxClasses["psd_private._CharacterID.CharacterID_Impl_"] = function() { };
+psd_private._CharacterID.CharacterID_Impl_.__name__ = ["psd_private","_CharacterID","CharacterID_Impl_"];
+psd_private.Lib = $hxClasses["psd_private.Lib"] = function() { };
+psd_private.Lib.__name__ = ["psd_private","Lib"];
+psd_private.Lib.charIDToTypeID = function(characterID) {
+	return charIDToTypeID(characterID);
+};
+psd_private.Lib.executeAction = function(typeId,actionDescriptor,dialogModes) {
+	executeAction(typeId,actionDescriptor,dialogModes);
+};
 Math.NaN = Number.NaN;
 Math.NEGATIVE_INFINITY = Number.NEGATIVE_INFINITY;
 Math.POSITIVE_INFINITY = Number.POSITIVE_INFINITY;
@@ -1312,39 +1160,29 @@ var Bool = $hxClasses.Bool = Boolean;
 Bool.__ename__ = ["Bool"];
 var Class = $hxClasses.Class = { __name__ : ["Class"]};
 var Enum = { };
-adobe.cep._CSEventScope.CSEventScope_Impl_.GLOBAL = "GLOBAL";
-adobe.cep._CSEventScope.CSEventScope_Impl_.APPLICATION = "APPLICATION";
-adobe.cep._CSEventType.CSEventType_Impl_.PERSISTENT = "com.adobe.PhotoshopPersistent";
-adobe.cep._OpenURLInDefaultBrowserCode.OpenURLInDefaultBrowserCode_Impl_.NO_ERROR = 0;
-adobe.cep._OpenURLInDefaultBrowserCode.OpenURLInDefaultBrowserCode_Impl_.ERR_UNKNOWN = 1;
-adobe.cep._OpenURLInDefaultBrowserCode.OpenURLInDefaultBrowserCode_Impl_.ERR_INVALID_PARAMS = 2;
-adobe.cep._OpenURLInDefaultBrowserCode.OpenURLInDefaultBrowserCode_Impl_.ERR_INVALID_URL = 201;
-adobe.cep._ScaleFactor.ScaleFactor_Impl_.FAIL = -1;
-adobe.cep._ScaleFactor.ScaleFactor_Impl_.NORMAL = 1;
-adobe.cep._ScaleFactor.ScaleFactor_Impl_.HiDPI = 2;
-adobe.cep._UIColorType.UIColorType_Impl_.RGB = 1;
-adobe.cep._UIColorType.UIColorType_Impl_.GRADATION = 2;
-common.ClassName.PIXEL_OUTLINE = "PixelOutline";
 common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_.UNOPENED_DOCUMENT = "unopened document";
 common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_.UNSELECTED_SINGLE_LAYER = "selected layer set";
 common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_.SELECTED_LAYER_SET = "unselected single layer";
 common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_.SELECTED_BACKGROUND_LAYER = "selected locked layer";
 common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_.SELECTED_LOCKED_LAYER = "selected background layer";
 common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_.SELECTED_TRANSPARENT_LAYER = "selected transparent layer";
-extension.JsxLoader.JSX_DIRECTORY = "/jsx/";
-extension.JsxLoader.JSX_EXTENSION = ".jsx";
-extension.JsxLoader.LOAD_JSX_SET = ["PixelOutline"];
-extension.Panel.TIMER_SPEED_CALM = 250;
-extension.Panel.TIMER_SPEED_RUNNING = 50;
-extension.PixelOutlineRunner.INSTANCE_NAME = "pixelOutline";
-extension.parts.TitleBar.SLIDE_SPEED = "fast";
 haxe.Serializer.USE_CACHE = false;
 haxe.Serializer.USE_ENUM_INDEX = false;
 haxe.Serializer.BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%:";
 haxe.Unserializer.DEFAULT_RESOLVER = Type;
 haxe.Unserializer.BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%:";
 haxe.ds.ObjectMap.count = 0;
-extension.Panel.main();
-})();
-
-//# sourceMappingURL=index.js.map
+PixelOutline.BORDER_PIXEL_SIZE = 1;
+LayerTypeName.LAYER_SET = "LayerSet";
+psd.Lib.app = app;
+psd.UnitType.PIXEL = "px";
+psd_private._CharacterID.CharacterID_Impl_.SELECT = "slct";
+psd_private._CharacterID.CharacterID_Impl_.NULL = "null";
+psd_private._CharacterID.CharacterID_Impl_.LAYER = "Lyr ";
+psd_private._CharacterID.CharacterID_Impl_.MKVS = "MkVs";
+psd_private._CharacterID.CharacterID_Impl_.SETD = "setd";
+psd_private._CharacterID.CharacterID_Impl_.CHNL = "Chnl";
+psd_private._CharacterID.CharacterID_Impl_.FSEL = "fsel";
+psd_private._CharacterID.CharacterID_Impl_.T = "T   ";
+psd_private._CharacterID.CharacterID_Impl_.TRSP = "Trsp";
+PixelOutline.main();

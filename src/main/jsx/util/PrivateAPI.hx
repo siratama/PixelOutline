@@ -1,5 +1,6 @@
 package jsx.util;
 
+import psd.Layer;
 import psd_private.CharacterID;
 import psd_private.Lib;
 import psd_private.DialogModes;
@@ -8,22 +9,12 @@ import psd_private.ActionDescriptor;
 
 class PrivateAPI
 {
-	public static function selectSingleLayer(layerName:String)
+	public static function selectShapeBorder(layer:Layer)
 	{
-		var idslct = Lib.charIDToTypeID(CharacterID.SELECT);
-		var desc = new ActionDescriptor();
-		var idnull = Lib.charIDToTypeID(CharacterID.NULL);
-		var ref = new ActionReference();
-		var idLyr = Lib.charIDToTypeID(CharacterID.LAYER);
-		ref.putName(idLyr, layerName);
-		desc.putReference(idnull, ref);
-		var idMkVs = Lib.charIDToTypeID(CharacterID.MKVS);
-		desc.putBoolean(idMkVs, false);
-		Lib.executeAction(idslct, desc, DialogModes.NO);
-	}
+		var originalLayerName = layer.name;
+		layer.name = "_____temp_layer_name_____ ";
+		var layerName = layer.name;
 
-	public static function selectShapeBorder(layerName:String)
-	{
 		var idsetd = Lib.charIDToTypeID(CharacterID.SETD);
 		var desc = new ActionDescriptor();
 		var idnull = Lib.charIDToTypeID(CharacterID.NULL);
@@ -46,5 +37,7 @@ class PrivateAPI
 
 		desc.putReference(idT, ref2);
 		Lib.executeAction(idsetd, desc, DialogModes.NO);
+
+		layer.name = originalLayerName;
 	}
 }

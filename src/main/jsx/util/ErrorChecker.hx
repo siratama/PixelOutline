@@ -1,4 +1,5 @@
 package jsx.util;
+import psd.Layer;
 import psd.Document;
 class ErrorChecker
 {
@@ -21,5 +22,11 @@ class ErrorChecker
 
 		selection.deselect();
 		return selectedSingleLayer;
+	}
+	public static function hasPixel(layer:Layer):Bool
+	{
+		var bounds = layer.bounds;
+		for (bound in bounds) if(bound == null) return false;
+		return true;
 	}
 }

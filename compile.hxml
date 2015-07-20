@@ -1,7 +1,9 @@
--js deploy/js/index.js
--main extension.Panel
 -cp src/main
 -cp src/extern
+--each
+
+-js deploy/js/index.js
+-main extension.Panel
 -cp C:/googledrive/workspace/haxelib/haxe-cep
 -lib jQueryExtern
 -debug
@@ -10,6 +12,18 @@
 
 -js deploy/jsx/PixelOutline.jsx
 -main jsx.PixelOutline
--cp src/main
--cp src/extern
 -D js-classic
+
+--next
+
+-js download/PixelOutline.jsx
+-main jsx.PixelOutline
+-D js-classic
+-D normal
+
+--next
+
+-js download/PixelOutlineNewLayer.jsx
+-main jsx.PixelOutline
+-D js-classic
+-D newlayer

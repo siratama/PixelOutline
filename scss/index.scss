@@ -41,6 +41,10 @@ button{
       opacity: 0.2;
     }
   }
+  .note{
+    font-size: 10px;
+    color: #bbbbbb;
+  }
 }
 
 #container{
@@ -52,9 +56,13 @@ hr{
 }
 
 #pixel_outline_runner{
-  padding-left: 30px;
+  padding-top: 10px;
+  padding-left: 20px;
   button{
     width: 130px;
+  }
+  div{
+    margin-bottom: 5px;
   }
 }
 

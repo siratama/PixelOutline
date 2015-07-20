@@ -1,6 +1,5 @@
 package extension;
 
-import common.PixelOutlineEvent.PixelOutlineInitialErrorEvent;
 import extension.PixelOutlineRunner.PixelOutlineRunnerEvent;
 import js.Browser;
 import haxe.Timer;
@@ -67,12 +66,15 @@ class Panel
 	private function observeToClickUI()
 	{
 		if(view.runButton.isClicked()){
-			initializeToCallPixelOutline();
+			initializeToCallPixelOutline(false);
+		}
+		else if(view.runNewLayerButton.isClicked()){
+			initializeToCallPixelOutline(true);
 		}
 	}
-	private function initializeToCallPixelOutline()
+	private function initializeToCallPixelOutline(isCreatedNewLayer:Bool)
 	{
-		pixelOutlineRunner.call(view.isCreatedNewLayer());
+		pixelOutlineRunner.call(isCreatedNewLayer);
 		changeRunning(callPixelOutline, TIMER_SPEED_RUNNING);
 	}
 	private function callPixelOutline()
@@ -82,24 +84,9 @@ class Panel
 		switch(event){
 			case PixelOutlineRunnerEvent.NONE: return;
 
-			case PixelOutlineRunnerEvent.INITIAL_ERROR(error):
-				if(!view.isDisplayedErrorAlert()) return;
-
-				var errorMessage = switch(error){
-					case PixelOutlineInitialErrorEvent.NONE:
-						"extension error";
-					case PixelOutlineInitialErrorEvent.ERROR(message):
-						message;
-					case PixelOutlineInitialErrorEvent.SELECTED_LAYER_SET:
-						"selected layer set";
-					case PixelOutlineInitialErrorEvent.UNSELECTED_SINGLE_LAYER:
-						"unselected single layer";
-					case PixelOutlineInitialErrorEvent.SELECTED_LOCKED_LAYER:
-						"selected locked layer";
-					case PixelOutlineInitialErrorEvent.SELECTED_BACKGROUND_LAYER:
-						"selected background layer";
-				}
-				js.Lib.alert(errorMessage);
+			case PixelOutlineRunnerEvent.INITIAL_ERROR_EVENT(error):
+				js.Lib.alert(cast(error, String));
+				initializeToClickUI();
 
 			case PixelOutlineRunnerEvent.SUCCESS:
 				initializeToClickUI();

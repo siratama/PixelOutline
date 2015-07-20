@@ -1,6 +1,6 @@
 package extension;
 
-import common.PixelOutlineEvent;
+import common.PixelOutlineInitialErrorEvent;
 import common.ClassName;
 import common.JsxEvent;
 import haxe.Unserializer;
@@ -8,7 +8,7 @@ import haxe.Serializer;
 
 enum PixelOutlineRunnerEvent
 {
-	INITIAL_ERROR(error:PixelOutlineInitialErrorEvent);
+	INITIAL_ERROR_EVENT(error:PixelOutlineInitialError);
 	SUCCESS;
 	NONE;
 }
@@ -60,10 +60,10 @@ class PixelOutlineRunner
 				var initialErrorEvent:PixelOutlineInitialErrorEvent = Unserializer.run(serializedEvent);
 				switch(initialErrorEvent)
 				{
+					case PixelOutlineInitialErrorEvent.ERROR(error):
+						destroy(PixelOutlineRunnerEvent.INITIAL_ERROR_EVENT(error));
 					case PixelOutlineInitialErrorEvent.NONE:
 						execute();
-					case _:
-						destroy(PixelOutlineRunnerEvent.INITIAL_ERROR(initialErrorEvent));
 				}
 		}
 	}

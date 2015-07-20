@@ -31,15 +31,21 @@ button {
     background: -webkit-linear-gradient(top, #424242, #2d2d2d); }
     button:disabled img {
       opacity: 0.2; }
+  button .note {
+    font-size: 10px;
+    color: #bbbbbb; }
 
 hr {
   border: 1px solid #333333;
   margin-bottom: 11px; }
 
 #pixel_outline_runner {
-  padding-left: 30px; }
+  padding-top: 10px;
+  padding-left: 20px; }
   #pixel_outline_runner button {
     width: 130px; }
+  #pixel_outline_runner div {
+    margin-bottom: 5px; }
 
 .clear {
   clear: both; }

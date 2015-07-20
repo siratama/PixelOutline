@@ -10,14 +10,17 @@ class View
 
 	private var element:JQuery;
 	public var runButton(default, null):Button;
+	public var runNewLayerButton(default, null):Button;
 	private function new()
 	{
-		element =  new JQuery("#view");
+		element =  new JQuery("#pixel_outline_runner");
 
-		new TitleBar("title_option", element);
+		//new TitleBar("title_option", element);
 
 		runButton = new Button(element, "run_button");
+		runNewLayerButton = new Button(element, "run_new_layer_button");
 	}
+	/*
 	public function isCreatedNewLayer():Bool{
 		return isChecked("new_layer_creation");
 	}
@@ -27,4 +30,5 @@ class View
 	private function isChecked(className:String):Bool{
 		return new JQuery('.$className', element).is(":checked");
 	}
+	*/
 }

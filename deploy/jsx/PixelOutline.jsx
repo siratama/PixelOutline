@@ -219,27 +219,14 @@ Type["typeof"] = function(v) {
 	}
 };
 var common = common || {};
-common.PixelOutlineEvent = $hxClasses["common.PixelOutlineEvent"] = { __ename__ : ["common","PixelOutlineEvent"], __constructs__ : ["NONE"] };
-common.PixelOutlineEvent.NONE = ["NONE",0];
-common.PixelOutlineEvent.NONE.toString = $estr;
-common.PixelOutlineEvent.NONE.__enum__ = common.PixelOutlineEvent;
-common.PixelOutlineInitialErrorEvent = $hxClasses["common.PixelOutlineInitialErrorEvent"] = { __ename__ : ["common","PixelOutlineInitialErrorEvent"], __constructs__ : ["NONE","UNSELECTED_SINGLE_LAYER","SELECTED_LAYER_SET","SELECTED_BACKGROUND_LAYER","SELECTED_LOCKED_LAYER","ERROR"] };
+common.PixelOutlineInitialErrorEvent = $hxClasses["common.PixelOutlineInitialErrorEvent"] = { __ename__ : ["common","PixelOutlineInitialErrorEvent"], __constructs__ : ["NONE","ERROR"] };
 common.PixelOutlineInitialErrorEvent.NONE = ["NONE",0];
 common.PixelOutlineInitialErrorEvent.NONE.toString = $estr;
 common.PixelOutlineInitialErrorEvent.NONE.__enum__ = common.PixelOutlineInitialErrorEvent;
-common.PixelOutlineInitialErrorEvent.UNSELECTED_SINGLE_LAYER = ["UNSELECTED_SINGLE_LAYER",1];
-common.PixelOutlineInitialErrorEvent.UNSELECTED_SINGLE_LAYER.toString = $estr;
-common.PixelOutlineInitialErrorEvent.UNSELECTED_SINGLE_LAYER.__enum__ = common.PixelOutlineInitialErrorEvent;
-common.PixelOutlineInitialErrorEvent.SELECTED_LAYER_SET = ["SELECTED_LAYER_SET",2];
-common.PixelOutlineInitialErrorEvent.SELECTED_LAYER_SET.toString = $estr;
-common.PixelOutlineInitialErrorEvent.SELECTED_LAYER_SET.__enum__ = common.PixelOutlineInitialErrorEvent;
-common.PixelOutlineInitialErrorEvent.SELECTED_BACKGROUND_LAYER = ["SELECTED_BACKGROUND_LAYER",3];
-common.PixelOutlineInitialErrorEvent.SELECTED_BACKGROUND_LAYER.toString = $estr;
-common.PixelOutlineInitialErrorEvent.SELECTED_BACKGROUND_LAYER.__enum__ = common.PixelOutlineInitialErrorEvent;
-common.PixelOutlineInitialErrorEvent.SELECTED_LOCKED_LAYER = ["SELECTED_LOCKED_LAYER",4];
-common.PixelOutlineInitialErrorEvent.SELECTED_LOCKED_LAYER.toString = $estr;
-common.PixelOutlineInitialErrorEvent.SELECTED_LOCKED_LAYER.__enum__ = common.PixelOutlineInitialErrorEvent;
-common.PixelOutlineInitialErrorEvent.ERROR = function(message) { var $x = ["ERROR",5,message]; $x.__enum__ = common.PixelOutlineInitialErrorEvent; $x.toString = $estr; return $x; };
+common.PixelOutlineInitialErrorEvent.ERROR = function(error) { var $x = ["ERROR",1,error]; $x.__enum__ = common.PixelOutlineInitialErrorEvent; $x.toString = $estr; return $x; };
+if(!common._PixelOutlineInitialErrorEvent) common._PixelOutlineInitialErrorEvent = {};
+common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_ = $hxClasses["common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_"] = function() { };
+common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_.__name__ = ["common","_PixelOutlineInitialErrorEvent","PixelOutlineInitialError_Impl_"];
 var haxe = haxe || {};
 haxe.Serializer = $hxClasses["haxe.Serializer"] = function() {
 	this.buf = new StringBuf();
@@ -990,30 +977,41 @@ var PixelOutline = $hxClasses["PixelOutline"] = function() {
 };
 PixelOutline.__name__ = ["PixelOutline"];
 PixelOutline.main = function() {
-	jsx._PixelOutline.PixelOutlineTest.execute();
 };
 PixelOutline.prototype = {
 	getInitialErrorEvent: function() {
-		var activeLayer = this.application.activeDocument.activeLayer;
+		var error;
+		if(this.application.documents.length == 0) error = "unopened document"; else if(this.application.activeDocument.activeLayer.typename == LayerTypeName.LAYER_SET) error = "unselected single layer"; else if(!jsx.util.ErrorChecker.isSelectedSingleLayer(this.application.activeDocument)) error = "selected layer set"; else if(this.application.activeDocument.activeLayer.allLocked) error = "selected background layer"; else if((js.Boot.__cast(this.application.activeDocument.activeLayer , ArtLayer)).isBackgroundLayer) error = "selected locked layer"; else if(!jsx.util.ErrorChecker.hasPixel(this.application.activeDocument.activeLayer)) error = "selected transparent layer"; else error = null;
 		var event;
-		if(this.application.documents.length == 0) event = common.PixelOutlineInitialErrorEvent.ERROR("Open document."); else if(activeLayer.typename == LayerTypeName.LAYER_SET) event = common.PixelOutlineInitialErrorEvent.SELECTED_LAYER_SET; else if(!jsx.util.ErrorChecker.isSelectedSingleLayer(this.application.activeDocument)) event = common.PixelOutlineInitialErrorEvent.UNSELECTED_SINGLE_LAYER; else if(activeLayer.allLocked) event = common.PixelOutlineInitialErrorEvent.SELECTED_LOCKED_LAYER; else if((js.Boot.__cast(activeLayer , ArtLayer)).isBackgroundLayer) event = common.PixelOutlineInitialErrorEvent.SELECTED_BACKGROUND_LAYER; else event = common.PixelOutlineInitialErrorEvent.NONE;
+		if(error == null) event = common.PixelOutlineInitialErrorEvent.NONE; else event = common.PixelOutlineInitialErrorEvent.ERROR(error);
 		return haxe.Serializer.run(event);
 	}
 	,execute: function(serializedNewLayerCreation) {
-		var newLayerCreation = haxe.Unserializer.run(serializedNewLayerCreation);
+		var isNewLayerCreation = haxe.Unserializer.run(serializedNewLayerCreation);
 		this.activeDocument = this.application.activeDocument;
+		this.documentWidth = this.activeDocument.width | 0;
+		this.documentHeight = this.activeDocument.height | 0;
 		var baseLayer = this.activeDocument.activeLayer;
 		var activeLayerDefaultVisible = baseLayer.visible;
 		if(!activeLayerDefaultVisible) baseLayer.visible = true;
-		var newLayer;
-		if(newLayerCreation) newLayer = this.createNewLayer(baseLayer); else newLayer = null;
-		jsx.util.PrivateAPI.selectShapeBorder(baseLayer.name);
-		if(newLayerCreation) this.activeDocument.activeLayer = newLayer;
-		this.strokeOutline();
+		var newLayer = this.createNewLayer(baseLayer);
+		jsx.util.PrivateAPI.selectShapeBorder(baseLayer);
+		this.activeDocument.activeLayer = newLayer;
+		var selection = this.activeDocument.selection;
+		selection.invert();
+		selection.contract("1");
+		selection.invert();
+		selection.fill(this.application.foregroundColor);
+		jsx.util.PrivateAPI.selectShapeBorder(baseLayer);
+		this.activeDocument.activeLayer = newLayer;
+		selection.clear();
+		selection.deselect();
+		if(!isNewLayerCreation) (js.Boot.__cast(newLayer , ArtLayer)).merge();
 		if(!activeLayerDefaultVisible) baseLayer.visible = false;
 	}
 	,createNewLayer: function(baseLayer) {
 		var newLayer = baseLayer.duplicate();
+		newLayer.name = baseLayer.name + " outline";
 		this.activeDocument.activeLayer = newLayer;
 		var selection = this.activeDocument.selection;
 		selection.selectAll();
@@ -1027,42 +1025,42 @@ PixelOutline.prototype = {
 		selection.invert();
 		selection.contract("1");
 		selection.invert();
-		selection.stroke(this.application.foregroundColor,1,StrokeLocation.INSIDE);
+		selection.fill(this.application.foregroundColor);
 		selection.deselect();
+	}
+	,clearHorizontally: function(x) {
+		this.selectHorizontally(x);
+		this.activeDocument.selection.clear();
+	}
+	,clearVertically: function(y) {
+		this.selectVertically(y);
+		this.activeDocument.selection.clear();
+	}
+	,selectHorizontally: function(y) {
+		this.activeDocument.selection.select([[0,y],[this.documentWidth,y],[this.documentWidth,y + 1],[0,y + 1]]);
+	}
+	,selectVertically: function(x) {
+		this.activeDocument.selection.select([[x,0],[x + 1,0],[x + 1,this.documentHeight],[x,this.documentHeight]]);
 	}
 	,__class__: PixelOutline
 };
 var jsx = jsx || {};
 if(!jsx._PixelOutline) jsx._PixelOutline = {};
-jsx._PixelOutline.PixelOutlineTest = $hxClasses["jsx._PixelOutline.PixelOutlineTest"] = function() { };
-jsx._PixelOutline.PixelOutlineTest.__name__ = ["jsx","_PixelOutline","PixelOutlineTest"];
-jsx._PixelOutline.PixelOutlineTest.execute = function() {
+jsx._PixelOutline.PixelOutlineJSXRunner = $hxClasses["jsx._PixelOutline.PixelOutlineJSXRunner"] = function() { };
+jsx._PixelOutline.PixelOutlineJSXRunner.__name__ = ["jsx","_PixelOutline","PixelOutlineJSXRunner"];
+jsx._PixelOutline.PixelOutlineJSXRunner.execute = function(isNewLayerCreation) {
 	var pixelOutline = new PixelOutline();
 	var errorEvent = haxe.Unserializer.run(pixelOutline.getInitialErrorEvent());
 	switch(errorEvent[1]) {
-	case 5:
-		var message = errorEvent[2];
-		js.Lib.alert(message);
-		return;
-	case 2:
-		js.Lib.alert("selected layer set");
-		return;
 	case 1:
-		js.Lib.alert("unselected single layer");
-		return;
-	case 4:
-		js.Lib.alert("selected locked layer");
-		return;
-	case 3:
-		js.Lib.alert("selected background layer");
-		return;
+		var error = errorEvent[2];
+		js.Lib.alert(js.Boot.__cast(error , String));
+		break;
 	case 0:
-		"";
+		var serializedToCreateNewLayer = haxe.Serializer.run(isNewLayerCreation);
+		pixelOutline.execute(serializedToCreateNewLayer);
 		break;
 	}
-	var newLayerCreation = false;
-	var serializedToCreateNewLayer = haxe.Serializer.run(newLayerCreation);
-	pixelOutline.execute(serializedToCreateNewLayer);
 };
 if(!jsx.util) jsx.util = {};
 jsx.util.ErrorChecker = $hxClasses["jsx.util.ErrorChecker"] = function() { };
@@ -1082,21 +1080,22 @@ jsx.util.ErrorChecker.isSelectedSingleLayer = function(activeDocument) {
 	selection.deselect();
 	return selectedSingleLayer;
 };
+jsx.util.ErrorChecker.hasPixel = function(layer) {
+	var bounds = layer.bounds;
+	var _g = 0;
+	while(_g < bounds.length) {
+		var bound = bounds[_g];
+		++_g;
+		if(bound == null) return false;
+	}
+	return true;
+};
 jsx.util.PrivateAPI = $hxClasses["jsx.util.PrivateAPI"] = function() { };
 jsx.util.PrivateAPI.__name__ = ["jsx","util","PrivateAPI"];
-jsx.util.PrivateAPI.selectSingleLayer = function(layerName) {
-	var idslct = charIDToTypeID("slct");
-	var desc = new ActionDescriptor();
-	var idnull = charIDToTypeID("null");
-	var ref = new ActionReference();
-	var idLyr = charIDToTypeID("Lyr ");
-	ref.putName(idLyr,layerName);
-	desc.putReference(idnull,ref);
-	var idMkVs = charIDToTypeID("MkVs");
-	desc.putBoolean(idMkVs,false);
-	executeAction(idslct,desc,DialogModes.NO);
-};
-jsx.util.PrivateAPI.selectShapeBorder = function(layerName) {
+jsx.util.PrivateAPI.selectShapeBorder = function(layer) {
+	var originalLayerName = layer.name;
+	layer.name = "_____temp_layer_name_____ ";
+	var layerName = layer.name;
 	var idsetd = charIDToTypeID("setd");
 	var desc = new ActionDescriptor();
 	var idnull = charIDToTypeID("null");
@@ -1112,6 +1111,7 @@ jsx.util.PrivateAPI.selectShapeBorder = function(layerName) {
 	ref2.putName(idLyr,layerName);
 	desc.putReference(idT,ref2);
 	executeAction(idsetd,desc,DialogModes.NO);
+	layer.name = originalLayerName;
 };
 var LayerTypeName = $hxClasses["LayerTypeName"] = function() { };
 LayerTypeName.__name__ = ["LayerTypeName"];
@@ -1159,6 +1159,12 @@ var Bool = $hxClasses.Bool = Boolean;
 Bool.__ename__ = ["Bool"];
 var Class = $hxClasses.Class = { __name__ : ["Class"]};
 var Enum = { };
+common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_.UNOPENED_DOCUMENT = "unopened document";
+common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_.UNSELECTED_SINGLE_LAYER = "selected layer set";
+common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_.SELECTED_LAYER_SET = "unselected single layer";
+common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_.SELECTED_BACKGROUND_LAYER = "selected locked layer";
+common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_.SELECTED_LOCKED_LAYER = "selected background layer";
+common._PixelOutlineInitialErrorEvent.PixelOutlineInitialError_Impl_.SELECTED_TRANSPARENT_LAYER = "selected transparent layer";
 haxe.Serializer.USE_CACHE = false;
 haxe.Serializer.USE_ENUM_INDEX = false;
 haxe.Serializer.BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%:";
